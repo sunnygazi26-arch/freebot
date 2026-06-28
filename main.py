@@ -80,7 +80,7 @@ CHANNEL_3_LINK = "https://t.me/APPLE_CRASH_HACK11"
 WEBAPP_URL = "https://ghostchannel.unaux.com/" 
 
 # রেজিস্ট্রেশন লিঙ্ক
-REGISTRATION_LINK = "https://1xbetmelbet.com"
+REGISTRATION_LINK = "https://1xbet-bangladesh.mobi"
 
 
 # সাবস্ক্রিপশন চেক করার ফাংশন
