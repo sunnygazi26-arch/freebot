@@ -10,15 +10,13 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return "Bot is running perfectly!"
+    return "Bot is running!"
 
 def run_flask():
-    # Render পোর্ট অ্যাসাইন করে, সেটি রিসিভ করার জন্য
     port = int(os.environ.get("PORT", 8080))
     app.run(host="0.0.0.0", port=port)
 
 # --- টেলিগ্রাম বট কনফিগারেশন ---
-# আপনার দেওয়া বট টোকেন
 BOT_TOKEN = "8276327075:AAHA-7nrNfRhLCauU90xfuXV3-v2vhiURdE"
 bot = telebot.TeleBot(BOT_TOKEN)
 
@@ -27,16 +25,22 @@ IMAGE_1 = "https://i.ibb.co/Kpg2fWTx/IMG-20260628-224110-275.jpg"
 IMAGE_2 = "https://i.ibb.co/1YNw3TSN/IMG-20260628-224102-850.jpg"
 IMAGE_3 = "https://i.ibb.co/27ckLmQt/IMG-20260628-224052-676.jpg"
 
-# --- সেটিংস (এখানে আপনার লিংক ও আইডি পরিবর্তন করবেন) ---
-# চ্যানেলের ইউজারনেম বা আইডি (অবশ্যই বটকে এই চ্যানেলগুলোতে অ্যাডমিন বানাতে হবে)
-CHANNELS = ["@channel_username_1", "@channel_username_2", "@channel_username_3"] 
+# --- সেটিংস ---
+# ১. প্রথম চ্যানেলটি পাবলিক (@Free_Script_79)
+# ২. দ্বিতীয় চ্যানেলটি প্রাইভেট (এর জায়গায় আপনার প্রাইভেট চ্যানেলের আইডিটি বসাবেন, যেমন: "-1001234567890")
+# ৩. তৃতীয় চ্যানেলটি পাবলিক (@APPLE_CRASH_HACK11)
+CHANNELS = [
+    "@Free_Script_79", 
+    "-1003941084913",  # <-- এখানে আপনার প্রাইভেট চ্যানেলের Numerical ID-টি বসাবেন (অবশ্যই ডাবল কোটেশনের ভেতরে)
+    "@APPLE_CRASH_HACK11"
+] 
 
-# চ্যানেলে জয়েন করার জন্য বাটনের লিঙ্ক
+# চ্যানেলে জয়েন করার জন্য বাটনের লিঙ্ক (আপনার দেওয়া লিঙ্কগুলো সেট করা হয়েছে)
 CHANNEL_1_LINK = "https://t.me/Free_Script_79"
-CHANNEL_2_LINK = "https://t.me/+95pjdAhv0TtkYjc1"
+CHANNEL_2_LINK = "https://t.me/+95pjdAhv0TtkYjc1"  # প্রাইভেট জয়েন লিংক
 CHANNEL_3_LINK = "https://t.me/APPLE_CRASH_HACK11"
 
-# আপনার সিগনাল ওয়েব অ্যাপের লিঙ্ক (এখানে আপনার কাঙ্ক্ষিত লিঙ্কটি বসাবেন)
+# আপনার সিগনাল ওয়েব অ্যাপের লিঙ্ক
 WEBAPP_URL = "https://ghostchannel.unaux.com/" 
 
 # রেজিস্ট্রেশন লিঙ্ক
@@ -46,17 +50,16 @@ REGISTRATION_LINK = "https://1xbetmelbet.com"
 # সাবস্ক্রিপশন চেক করার ফাংশন
 def is_user_subscribed(user_id):
     for channel in CHANNELS:
+        # যদি আপনি এখনও আইডি পরিবর্তন না করে থাকেন, তবে এটি এরর এড়াতে স্কিপ করবে
+        if channel == "-100XXXXXXXXXX":
+            continue
         try:
-            # যদি টেস্ট করার সময় ডামি আইডি ব্যবহার করেন, সেটি স্কিপ করতে পারেন
-            if channel == "@channel_username_1":
-                continue
-            
             chat_member = bot.get_chat_member(channel, user_id)
             if chat_member.status in ['left', 'kicked']:
                 return False
         except Exception as e:
             print(f"Error checking subscription for {channel}: {e}")
-            # যদি বট চ্যানেলে অ্যাডমিন না থাকে তাহলেও ফলস রিটার্ন করতে পারে
+            # বট যদি চ্যানেলে অ্যাডমিন না থাকে বা আইডিটি ভুল হয়, তবে এটি False রিটার্ন করবে
             return False
     return True
 
@@ -73,13 +76,13 @@ def start_command(message):
     else:
         send_step_1(chat_id)
 
-# ধাপ ১: চ্যানেল জয়েন করার অনুরোধ (Image 1)
+# Premium Step 1: চ্যানেল জয়েন করার অনুরোধ (Image 1)
 def send_step_1(chat_id):
     markup = types.InlineKeyboardMarkup(row_width=1)
     
-    btn1 = types.InlineKeyboardButton("Join Channel 1", url=CHANNEL_1_LINK)
-    btn2 = types.InlineKeyboardButton("Join Channel 2", url=CHANNEL_2_LINK)
-    btn3 = types.InlineKeyboardButton("Join Channel 3", url=CHANNEL_3_LINK)
+    btn1 = types.InlineKeyboardButton("Join Channel 1 📢", url=CHANNEL_1_LINK)
+    btn2 = types.InlineKeyboardButton("Join Channel 2 🔒", url=CHANNEL_2_LINK)
+    btn3 = types.InlineKeyboardButton("Join Channel 3 📢", url=CHANNEL_3_LINK)
     btn_check = types.InlineKeyboardButton("✅ Joined", callback_data="check_subscription")
     
     markup.add(btn1, btn2, btn3, btn_check)
@@ -100,7 +103,6 @@ def check_sub_callback(call):
 
     if is_user_subscribed(user_id):
         bot.answer_callback_query(call.id, "Verification Successful! ✅")
-        # আগের মেসেজটি ডিলিট করে পরের ধাপে নিয়ে যাওয়া
         try:
             bot.delete_message(chat_id, call.message.message_id)
         except Exception:
@@ -113,7 +115,7 @@ def check_sub_callback(call):
             show_alert=True
         )
 
-# ধাপ ২: অ্যাকাউন্ট খোলার অনুরোধ (Image 2)
+# Premium Step 2: অ্যাকাউন্ট খোলার অনুরোধ (Image 2)
 def send_step_2(chat_id):
     markup = types.InlineKeyboardMarkup(row_width=1)
     
@@ -136,7 +138,6 @@ def send_step_2(chat_id):
 def i_register_callback(call):
     chat_id = call.message.chat.id
     
-    # ইউজার আইডি চাওয়ার জন্য মেসেজ পাঠানো
     msg = bot.send_message(
         chat_id, 
         "📝 **Please send your 1xBet or Melbet Account ID (numbers only):**", 
@@ -144,12 +145,11 @@ def i_register_callback(call):
     )
     bot.register_next_step_handler(msg, process_account_id)
 
-# ধাপ ৩: আইডি রিসিভ এবং ৫ সেকেন্ড অপেক্ষা করে ভেরিফিকেশন (Image 3)
+# Premium Step 3: আইডি রিসিভ এবং ৫ সেকেন্ড অপেক্ষা করে ভেরিফিকেশন (Image 3)
 def process_account_id(message):
     chat_id = message.chat.id
     user_input = message.text
 
-    # আইডিটি কেবল সংখ্যা কিনা যাচাই করা
     if not user_input.isdigit():
         msg = bot.reply_to(
             message, 
@@ -159,19 +159,15 @@ def process_account_id(message):
         bot.register_next_step_handler(msg, process_account_id)
         return
 
-    # ৫ সেকেন্ডের লোডিং মেসেজ
     loading_msg = bot.send_message(chat_id, "Checking database... Please wait 5 seconds ⏳")
     
-    # ৫ সেকেন্ড অপেক্ষা করা
     time.sleep(5)
 
-    # লোডিং মেসেজটি ডিলিট করা
     try:
         bot.delete_message(chat_id, loading_msg.message_id)
     except Exception:
         pass
 
-    # Web App বাটনের মার্কআপ
     markup = types.InlineKeyboardMarkup()
     webapp = types.WebAppInfo(url=WEBAPP_URL)
     btn_webapp = types.InlineKeyboardButton("Open Signal 🚀", web_app=webapp)
@@ -189,11 +185,9 @@ def process_account_id(message):
 
 # --- রান প্রসেস ---
 if __name__ == "__main__":
-    # ব্যাকগ্রাউন্ডে Flask সার্ভার চালু করা (Render-এর জন্য প্রয়োজনীয়)
     flask_thread = threading.Thread(target=run_flask)
     flask_thread.daemon = True
     flask_thread.start()
 
-    # বট পোলিং চালু করা
     print("Bot is starting...")
     bot.infinity_polling()
