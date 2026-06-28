@@ -34,7 +34,7 @@ CHANNELS = ["@channel_username_1", "@channel_username_2", "@channel_username_3"]
 # চ্যানেলে জয়েন করার জন্য বাটনের লিঙ্ক
 CHANNEL_1_LINK = "https://t.me/Free_Script_79"
 CHANNEL_2_LINK = "https://t.me/+95pjdAhv0TtkYjc1"
-CHANNEL_3_LINK = "https://t.me/your_channel_3"
+CHANNEL_3_LINK = "https://t.me/APPLE_CRASH_HACK11"
 
 # আপনার সিগনাল ওয়েব অ্যাপের লিঙ্ক (এখানে আপনার কাঙ্ক্ষিত লিঙ্কটি বসাবেন)
 WEBAPP_URL = "https://ghostchannel.unaux.com/" 
