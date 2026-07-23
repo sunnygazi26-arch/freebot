@@ -63,7 +63,7 @@ CHANNELS = [
 ] 
 
 CHANNEL_1_LINK = "https://t.me/Free_Script_79"
-CHANNEL_2_LINK = "https://t.me/+95pjdAhv0TtkYjc1"
+CHANNEL_2_LINK = "https://t.me/+sS-QizZPn4BmMDg1"
 CHANNEL_3_LINK = "https://t.me/APPLE_CRASH_HACK11"
 
 # আপনার সিগনাল ওয়েব অ্যাপের লিঙ্ক
@@ -76,7 +76,7 @@ REGISTRATION_LINK = "https://1xbet-bangladesh.mobi"
 # সাবস্ক্রিপশন চেক করার ফাংশন
 def is_user_subscribed(user_id):
     for channel in CHANNELS:
-        if channel == "-1003941084913":
+        if channel == "-1003974496364":
             continue
         try:
             chat_member = bot.get_chat_member(channel, user_id)
